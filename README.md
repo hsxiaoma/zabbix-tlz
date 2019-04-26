@@ -6,7 +6,7 @@ zabbix监控API，简易的封装处理，实用的功能，针对获取数据�
 下面让我们来简单的使用zabbixAPI
 
 
-1. 通过构造请求参数 RequestParameterEntity 类中的属性就是Post请求中的 请求参数 （可增加，根据官方文档并没用全部覆盖）
+1. 通过构造请求参数 RequestParameterEntity 类中的属性就是Post请求中的 请求参数 （根据官方文档可增加，并没有将所有请求属性包含）
 ```Java
         @Data
         @AllArgsConstructor
