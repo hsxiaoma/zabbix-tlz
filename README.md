@@ -56,7 +56,7 @@ zabbix监控API，简易的封装处理，实用的功能，针对获取数据�
 2. 通过封装请求方法 `ZabbixRequest` 类调用相关信息（如主机、监控项、监控数据）
 
 ```java
-   /*——————————————————————获取主机id————————————————————————————————*/
+         /*——————————————————————获取主机id————————————————————————————————*/
         // 获取主机id
         JSONObject filter = new JSONObject();
         filter.put("ip", filterIpAddress);
@@ -65,7 +65,23 @@ zabbix监控API，简易的封装处理，实用的功能，针对获取数据�
         requestParameterEntity.setFilter(filter);
         ZabbixRequest zabbixRequest = new ZabbixRequest().login("http://ip/api_jsonrpc.php", "user", "pwd")
                 .getHostId(requestParameterEntity);
-       /*——————————————————————获取历史数据————————————————————————————————*/
+                
+                
+         /*——————————————————————获取监控项数据————————————————————————————————*/
+        // 获取监控项
+
+        RequestParameterEntity requestParameterEntity1 = new RequestParameterEntity();
+        requestParameterEntity1.setOutput("itemids");
+        requestParameterEntity1.setHostids(zabbixRequest.hostId);
+        /*
+             添加 item 过滤条件 如名称 主键等
+             JSONObject search = new JSONObject();
+             search.put("name", "pgsql-version-ud");
+              requestParameterEntity1.setSearch(search);*/
+
+        zabbixRequest.getItemId(requestParameterEntity1);        
+                
+          /*——————————————————————获取历史数据————————————————————————————————*/
         // 获取历史数据
         RequestParameterEntity requestParameterEntity2 = new RequestParameterEntity();
         requestParameterEntity2.setOutput("extend");
