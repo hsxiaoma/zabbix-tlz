@@ -6,12 +6,20 @@
  */
 package com.thunisoft.agent.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.thunisoft.agent.api.ZabbixRequest;
+import com.thunisoft.agent.dao.HostDao;
+import com.thunisoft.agent.dao.mapper.DataBaseMonitorMapper;
+import com.thunisoft.agent.entity.CommonResponse;
+import com.thunisoft.agent.utils.ResponseResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 /**
  * ZabbixApiController
@@ -29,6 +37,12 @@ public class ZabbixApiController {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    HostDao hostDao;
+
+    @Autowired
+    DataBaseMonitorMapper dataBaseMonitorMapper;
 
     @RequestMapping("/sessionId")
     public String login() {
@@ -48,6 +62,23 @@ public class ZabbixApiController {
     @RequestMapping("/history")
     public String getHistory(@RequestParam(required = false) String hostId) {
         return "";
+    }
+
+    @RequestMapping("/test")
+    public CommonResponse getHistory(@RequestParam(required = false, defaultValue = "1") String pageNum,
+            @RequestParam(required = false, defaultValue = "10") String pageSize) {
+
+        PageHelper.startPage(1, 2);
+        List list = hostDao.getHostList();
+        PageInfo<List> pageInfo = new PageInfo<List>(list);
+        return ResponseResultUtil.success(list);
+    }
+
+
+    @RequestMapping("/testXML")
+    public CommonResponse getHistory() {
+        List list = dataBaseMonitorMapper.getDBmonitorList();
+        return ResponseResultUtil.success(list);
     }
 
 }

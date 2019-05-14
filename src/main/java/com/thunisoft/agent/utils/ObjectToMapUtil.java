@@ -34,15 +34,14 @@ public class ObjectToMapUtil {
                 String varName = fields[i].getName();
                 boolean accessFlag = fields[i].isAccessible();
                 fields[i].setAccessible(true);
-                Object o = null;
-                o = fields[i].get(requestParameters);
+                Object o = fields[i].get(requestParameters);
                 if (o != null) {
                     map.put(varName, o);
                     fields[i].setAccessible(accessFlag);
                 }
             }
         } catch (IllegalAccessException e) {
-            log.error("实体转Map异常，{}", e);
+            log.error("实体请求参数转化Map异常，{}", e);
         }
         return map;
     }
